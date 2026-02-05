@@ -11,33 +11,22 @@
         body {
             font-family: 'Indie Flower', cursive;
             background-color: #fff1f2;
-            /* overflow-x hidden keeps the "No" button from making the page wide, 
-               but allows scrolling down if needed */
-            overflow-x: hidden; 
+            overflow-x: hidden;
             min-height: 100vh;
-        }
-        .heart-bg {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            pointer-events: none;
-            z-index: -1;
         }
     </style>
 </head>
 <body class="flex flex-col items-center justify-center p-4 text-center">
 
-    <audio id="valentine-music" loop>
-        <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
-        Your browser does not support the audio element.
-    </audio>
+    <audio id="valentine-music">
+        <source src="https://www.pagalworld.com.sb/files/download/id/4183" type="audio/mpeg">
+        </audio>
 
-    <div class="heart-bg" id="heart-bg"></div>
-
-    <div id="question-container" class="bg-white/60 p-8 rounded-3xl backdrop-blur-md shadow-2xl border border-white max-w-lg w-full">
+    <div id="question-container" class="bg-white/70 p-8 rounded-3xl backdrop-blur-md shadow-2xl border border-white max-w-lg w-full transition-all">
         <img id="display-image" src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExOHIyc3J3ZzZicWp3ZzZicWp3ZzZicWp3ZzZicWp3ZzZicWp3ZyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/cLS1cfxvGOPVpf9g3y/giphy.gif" 
-             alt="Cute bear" class="w-48 h-48 mb-6 mx-auto transition-transform hover:rotate-3">
+             alt="Cute bear" class="w-48 h-48 mb-6 mx-auto transition-transform hover:scale-110">
         
-        <h1 id="main-text" class="text-3xl md:text-4xl font-bold text-pink-600 mb-8 leading-tight">Will you be my Valentine, my favorite Dumpling? 🥟💖</h1>
+        <h1 id="main-text" class="text-3xl md:text-4xl font-bold text-pink-600 mb-8">Will you be my Valentine, my favorite Dumpling? 🥟💖</h1>
 
         <div class="flex flex-col md:flex-row items-center justify-center gap-6" id="button-group">
             <button id="yes-btn" class="bg-rose-500 hover:bg-rose-600 text-white font-bold py-4 px-10 rounded-full shadow-lg transition-all duration-200 z-50">
@@ -58,22 +47,17 @@
         let clickCount = 0;
         const noTexts = [
             "Are you sure?", "Really sure??", "Think again! 🥺", 
-            "I'll buy you snacks...", "Wait, look at this face! 🐻", 
+            "I'll buy you momos!", "Wait, look at this face! 🐻", 
             "Last chance!", "Surely not?", "You're breaking my heart ;(", 
             "I'm gonna cry... 😭", "JUST SAY YES"
         ];
 
         noBtn.addEventListener('click', () => {
             clickCount++;
-            
-            // 1. Grow Yes button
             const newSize = 1 + (clickCount * 0.4);
             yesBtn.style.transform = `scale(${newSize})`;
-            
-            // 2. Update No button text
             noBtn.innerText = noTexts[Math.min(clickCount, noTexts.length - 1)];
 
-            // 3. Move No button randomly after 3 attempts
             if(clickCount >= 3) {
                 const x = Math.random() * (window.innerWidth - noBtn.offsetWidth);
                 const y = Math.random() * (window.innerHeight - noBtn.offsetHeight);
@@ -84,10 +68,10 @@
         });
 
         yesBtn.addEventListener('click', () => {
-            // Start Music
-            music.play().catch(e => console.log("Audio play blocked until interaction"));
+            // Play Music
+            music.play();
 
-            // Trigger Confetti
+            // Confetti
             confetti({
                 particleCount: 150,
                 spread: 70,
@@ -95,13 +79,13 @@
                 colors: ['#ff0000', '#ff69b4', '#ffb6c1']
             });
 
-            // Update UI
+            // "Tu hooro se bhi pyara lage" message
             container.innerHTML = `
                 <img src="IMG2.jpg" alt="Success" class="w-64 h-auto mb-6 mx-auto rounded-2xl shadow-2xl border-4 border-pink-200">
-                <h1 class="text-4xl font-bold text-pink-600 animate-bounce">Yayyyy! 🎉</h1>
-                <p class="text-2xl mt-4 text-pink-500 font-semibold leading-relaxed">Get excited for your gifts on the 14th!</p>
-                <p class="text-xl mt-4 text-gray-600 italic">I knew you'd say yes! I love you my cute little Dumpling ❤️❤️❤️</p>
-                <div class="mt-6 text-pink-400">♫ Playing our song...</div>
+                <h1 class="text-4xl font-bold text-pink-600 animate-pulse">Yayyyy! 🎉</h1>
+                <p class="text-2xl mt-4 text-pink-500 font-semibold italic">"Yahan pe bhi tu hooron se zyada haseen..."</p>
+                <p class="text-lg mt-4 text-gray-600">I love you my cute little Dumpling ❤️ See you on the 14th!</p>
+                <div class="mt-6 text-pink-400 animate-bounce">♫ Listening to O Meri Laila...</div>
             `;
         });
     </script>
